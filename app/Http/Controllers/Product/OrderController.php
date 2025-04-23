@@ -86,7 +86,7 @@ class OrderController extends Controller
         return view('backend.product.orders.create', [
             'isShown'   => false,
             'order'    => $order,
-            'hasOrderDetails'   => true,
+            'hasOrderDetails'   => $hasOrderDetails,
         ]);
     }
 
