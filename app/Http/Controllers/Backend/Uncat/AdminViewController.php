@@ -120,7 +120,7 @@ class AdminViewController extends Controller
                 $user->area_id = $request->area_id;
                 $user->road_number = $request->road_number;
                 $user->building_address = $request->building_address;
-                $user->profile_photo_path = imageUpload($request->file('profile_photo_path'), 'profile-image', 'user-', 200, 300);
+                $user->profile_photo = imageUpload($request->file('profile_photo_path'), 'profile-image', 'user-', 200, 300);
                 $user->floor = $request->floor;
                 $user->last_login_otp = session('otp');
                 $user->save();
@@ -241,7 +241,7 @@ class AdminViewController extends Controller
         {
             $pageContent = PageContent::where(['page_type' => 'policy'])->first();
             return response()->json(['content' => $pageContent], 200);
-        } elseif (str()->contains(url()->current(), 'privacy-policy'))
+        } elseif (str()->contains(url()->current(), 'support-center'))
         {
             $pageContent = PageContent::where(['page_type' => 'support'])->first();
             return response()->json(['content' => $pageContent], 200);
