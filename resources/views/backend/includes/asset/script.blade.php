@@ -27,6 +27,18 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    setInterval(function () {
+        $.ajax({
+            url: "{{ route('get-total-pending-orders') }}",
+            method: "GET",
+            success: function (totalNumber) {
+                $('#totalPendingOrder').text(totalNumber);
+            }
+        })
+    }, 1500)
+
+
     {{--toastr.options.progressBar = true;--}}
     {{--@if(session()->has('success'))--}}
     {{--    toastr.success("{{ session('success') ?? 'success' }}");--}}

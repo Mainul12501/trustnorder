@@ -202,15 +202,15 @@
 
 
                         <div class="row mt-3">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="">Delivery Charge</label>
                                 <input type="number" min="0" name="delivery_charge" class="form-control"  id="deliveryCharge" value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $order->delivery_charge : 0 }}" placeholder="Delivery Charge" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="">Grand Total</label>
                                 <input type="number" name="order_total" class="form-control" id="grandTotal" value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $order->order_total : 0 }}" placeholder="Grand Total" readonly />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="">Order Status</label>
                                 <select name="order_status" class="form-control  w-100" id="">
                                     <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending</option>
@@ -219,6 +219,13 @@
                                     <option value="on_delivery" {{ $order->order_status == 'on_delivery' ? 'selected' : '' }}>Our For Delivery</option>
                                     <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Completed</option>
                                     <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Payment Status</label>
+                                <select name="order_payment_status" class="form-control  w-100" id="">
+                                    <option value="DUE" {{ $order->order_payment_status == 'DUE' ? 'selected' : '' }}>DUE</option>
+                                    <option value="PAID" {{ $order->order_payment_status == 'PAID' ? 'selected' : '' }}>PAID</option>
                                 </select>
                             </div>
                         </div>

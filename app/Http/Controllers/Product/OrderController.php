@@ -106,6 +106,7 @@ class OrderController extends Controller
                 $order->delivery_charge = $request->delivery_charge;
                 $order->order_status = $request->order_status;
                 $order->category_id    = $request->category_id;
+                $order->order_payment_status    = $request->order_payment_status;
                 $order->status = 1;
                 $order->save();
                 $order->orderDetails->each->delete();

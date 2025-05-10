@@ -33,6 +33,7 @@ Route::post('/custom-login', [AdminViewController::class, 'login'])->name('custo
 Route::post('/reset-user-password', [AdminViewController::class, 'resetPassword'])->name('reset-password');
 Route::get('/privacy-policy', [AdminViewController::class, 'viewPages'])->name('privacy-policy');
 Route::get('/support-center', [AdminViewController::class, 'viewPages'])->name('support-center');
+Route::get('/get-total-pending-orders', [AdminViewController::class, 'getTotalPendingOrders'])->name('get-total-pending-orders');
 
 
 
@@ -74,6 +75,10 @@ Route::get('/migrate', function () {
     Artisan::call('migrate');
     echo Artisan::output();
 });
+Route::get('/migrate-fresh', function () {
+    Artisan::call('migrate:fresh');
+    echo Artisan::output();
+});
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
     echo Artisan::output();
@@ -81,3 +86,4 @@ Route::get('/storage-link', function () {
 Route::get('/auth-test', function () {
     return \App\helper\ViewHelper::loggedUser();
 });
+Route::get('/df-test',[AdminViewController::class, 'dfTest']);

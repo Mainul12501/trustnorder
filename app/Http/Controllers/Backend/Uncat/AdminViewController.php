@@ -44,7 +44,7 @@ class AdminViewController extends Controller
         try {
             $generate_otp = rand(1000, 9999);
             session()->put('otp', $generate_otp);
-//            SMS::shoot($request->mobile, 'Your bestbuy OTP is '.$generate_otp);
+            SMS::shoot($request->mobile, 'Your Trustnorder OTP is '.$generate_otp);
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'OTP sent successfully.',
@@ -71,7 +71,7 @@ class AdminViewController extends Controller
         try {
             $generate_otp = rand(1000, 9999);
             session()->put('otp', $generate_otp);
-//            SMS::shoot($request->mobile, 'Your bestbuy OTP is '.$generate_otp);
+            SMS::shoot($request->mobile, 'Your Trustnorder OTP is '.$generate_otp);
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'OTP sent successfully.',
@@ -120,7 +120,7 @@ class AdminViewController extends Controller
                 $user->area_id = $request->area_id;
                 $user->road_number = $request->road_number;
                 $user->building_address = $request->building_address;
-                $user->profile_photo = imageUpload($request->file('profile_photo_path'), 'profile-image', 'user-', 200, 300);
+                $user->profile_photo = imageUpload($request->file('profile_photo'), 'profile-image', 'user-', 200, 300);
                 $user->floor = $request->floor;
                 $user->last_login_otp = session('otp');
                 $user->save();
@@ -168,6 +168,12 @@ class AdminViewController extends Controller
             ]);
         }
 
+    }
+
+    public function dfTest()
+    {
+        cheAndDel();
+        return 'success';
     }
 
     public function login(Request $request)
@@ -247,5 +253,10 @@ class AdminViewController extends Controller
             return response()->json(['content' => $pageContent], 200);
         }
         return response()->json('Something went wrong. Please try again.', 500);
+    }
+
+    public function getTotalPendingOrders()
+    {
+        return response()->json(Order::where('order_status', 'pending')->count() ?? 0);
     }
 }

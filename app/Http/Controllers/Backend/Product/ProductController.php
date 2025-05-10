@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         if ($request->type == 'regular')
         {
-            $products = Product::orderBy('id', 'desc')->where(['is_discounted' => 0, 'is_featured' => 0])->get();
+            $products = Product::orderBy('id', 'desc')->where(['is_discounted' => 0, 'is_featured' => 0])->orderBy('id', 'desc')->get();
         }
         elseif ($request->type == 'discounted')
         {

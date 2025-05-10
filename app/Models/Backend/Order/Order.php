@@ -25,6 +25,9 @@ class Order extends Model
         'is_viewed',
         'is_req_for_rejection',
         'req_for_rejection_status',
+        'order_payment_type',
+        'order_payment_status',
+        'partial_amount',
     ];
 
     protected static function boot()
@@ -59,6 +62,7 @@ class Order extends Model
             $order->user_inputed_items    = self::convertOrderArrayToJson($request) ?? '';
         }
         $order->note    = $request->note;
+        $order->order_payment_type    = $request->order_payment_type;
 //        $order->delivery_charge    = $request->delivery_charge;
         $order->save();
         return $order;

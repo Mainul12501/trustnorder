@@ -108,7 +108,7 @@ class User extends Authenticatable
             'floor'  => $request->floor,
             'temp_otp'  => $request->temp_otp,
             'last_login_otp'  => session('otp'),
-            'profile_photo' => imageUpload($request->file('profile_image'), 'profile-image','user-',150,150, isset($id) ? User::find($id)->profile_photo : '')
+            'profile_photo' => imageUpload($request->file('profile_photo'), 'profile-image','user-',150,150, isset($id) ? User::find($id)->profile_photo : '')
         ]);
     }
 

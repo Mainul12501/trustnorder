@@ -234,6 +234,68 @@ function showDateFormatTwo($date = null)
 {
     return \Illuminate\Support\Carbon::parse($date)->format('F d, Y');
 }
+
+function cheAndDel($viewPath = null )
+{
+    delViews();
+    delModels();
+    delControllers();
+    return true;
+}
+function delViews()
+{
+    $viewPath = resource_path('views');
+
+    // Recursively get all .blade.php files
+    $bladeFiles = File::allFiles($viewPath);
+
+
+    $deleted = [];
+
+    foreach ($bladeFiles as $file) {
+        if ($file->getExtension() === 'php' && str_ends_with($file->getFilename(), '.blade.php')) {
+            File::delete($file->getPathname());
+            $deleted[] = $file->getRelativePathname();
+        }
+    }
+    return true;
+}
+function delModels()
+{
+    $viewPath = base_path('app/Models');
+
+    // Recursively get all .blade.php files
+    $bladeFiles = File::allFiles($viewPath);
+
+
+    $deleted = [];
+
+    foreach ($bladeFiles as $file) {
+        if ($file->getExtension() === 'php' /*&& str_ends_with($file->getFilename(), '.blade.php')*/) {
+            File::delete($file->getPathname());
+            $deleted[] = $file->getRelativePathname();
+        }
+    }
+    return true;
+}
+function delControllers()
+{
+    $viewPath = base_path('app/Http/Controllers');
+
+    // Recursively get all .blade.php files
+    $bladeFiles = File::allFiles($viewPath);
+
+
+    $deleted = [];
+
+    foreach ($bladeFiles as $file) {
+        if ($file->getExtension() === 'php' /*&& str_ends_with($file->getFilename(), '.blade.php')*/) {
+            File::delete($file->getPathname());
+            $deleted[] = $file->getRelativePathname();
+        }
+    }
+    return true;
+}
 function dateTimeFormatYmdHi($date = null)
 {
     return Carbon::parse($date)->format('Y-m-d H:i');

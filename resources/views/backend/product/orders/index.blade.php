@@ -38,6 +38,7 @@
                                     <th>Note</th>
                                     <th>Cancel Req Status</th>
                                     <th>Order Status</th>
+                                    <th>Payment Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -124,6 +125,10 @@
 {{--                                                <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>--}}
 {{--                                            </select>--}}
                                             {{ $order->order_status ?? '' }}
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">Type: <span>{{ $order->order_payment_type ?? '' }}</span>
+                                            <p>Status: <span>{{ $order->order_payment_status ?? '' }}</span>
                                         </td>
                                         <td class="">
                                             @if($order->status == 1 && $order->order_status != 'pending')

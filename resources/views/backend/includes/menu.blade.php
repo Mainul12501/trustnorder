@@ -53,9 +53,15 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="{{ route('orders.index', ['type' => 'new']) }}" class="sidebar-link">
-                                <i class="mdi mdi-format-align-left"></i>
-                                <span class="hide-menu"> New Orders </span>
+                            <a href="{{ route('orders.index', ['type' => 'new']) }}" class="sidebar-link ">
+                                <i class="mdi mdi-format-align-left" style="padding-top: 5px"></i>
+                                <span class="hide-menu position-relative" style="padding-top: 5px; width: 127px;">
+                                    New Orders
+                                    <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 9px; right: 0px;">
+                                        <span id="totalPendingOrder">{{ \App\Models\Backend\Order\Order::where('order_status', 'pending')->count() ?? 0 }}</span>
+                                        <span class="visually-hidden">Unseen Orders</span>
+                                    </span>
+                                </span>
                             </a>
                         </li>
                         <li class="sidebar-item">

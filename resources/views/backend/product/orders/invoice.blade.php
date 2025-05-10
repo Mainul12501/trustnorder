@@ -69,6 +69,8 @@
                                             <span class="col-6 text-sm-end">#{{ $order->id }}</span>
                                             <span class="col-6">Invoice Date</span>
                                             <span class="col-6 text-sm-end">{{ now()->format('d/m/Y') }}</span>
+                                            <span class="col-6">Payment Status</span>
+                                            <span class="col-6 text-sm-end">{{ $order->order_payment_status ?? 'DUE' }}</span>
                                         </div>
                                     </div>
                                 </div>
