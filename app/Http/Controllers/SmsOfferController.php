@@ -108,9 +108,10 @@ class SmsOfferController extends Controller
             $mobileNumbers = User::where(['role' => 'user'])->get(['mobile']);
             foreach ($mobileNumbers as $number)
             {
-                $numberString .= $number->mobile.',';
+//                $numberString .= $number->mobile.',';
+                SMS::shoot($number->mobile, $smsOffer->common_message);
             }
-            SMS::shoot($numberString, $smsOffer->common_message);
+//            SMS::shoot($numberString, $smsOffer->common_message);
             Toastr::success('Offer send to all users successfully.');
             return back();
         } catch (\Exception $exception)

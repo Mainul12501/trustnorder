@@ -34,6 +34,8 @@ Route::post('/reset-user-password', [AdminViewController::class, 'resetPassword'
 Route::get('/privacy-policy', [AdminViewController::class, 'viewPages'])->name('privacy-policy');
 Route::get('/support-center', [AdminViewController::class, 'viewPages'])->name('support-center');
 Route::get('/get-total-pending-orders', [AdminViewController::class, 'getTotalPendingOrders'])->name('get-total-pending-orders');
+Route::get('/privacy-policy', [AdminViewController::class, 'viewPages']);
+Route::get('/support-center', [AdminViewController::class, 'viewPages']);
 
 
 

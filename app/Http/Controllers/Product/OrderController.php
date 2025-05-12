@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Mockery\Exception;
+use Xenon\LaravelBDSms\Facades\SMS;
 
 class OrderController extends Controller
 {
@@ -124,6 +125,7 @@ class OrderController extends Controller
                     $orderDetails->save();
                 }
 //            });
+            SMS::shoot($order?->user?->mobile ?? '0000000000', "Order status changed to $order->order_status for order #$order->id");
             Toastr::success('Order Updated Successfully.');
             return redirect()->route('orders.index');
         } catch (\Exception $exception)

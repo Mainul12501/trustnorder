@@ -48,7 +48,8 @@ class AdminViewController extends Controller
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'OTP sent successfully.',
-                'isNewUser' => $isNewUser
+                'isNewUser' => $isNewUser,
+                'otp' => $generate_otp
             ]);
         } catch (\Exception $e) {
             Toastr::error($e->getMessage());
@@ -106,7 +107,7 @@ class AdminViewController extends Controller
         }
 
         try {
-            if ($request->user_otp == 0000 || $request->user_otp == session('otp')) {
+            if (/*$request->user_otp == 0000 ||*/ $request->user_otp == session('otp')) {
 
                 $user = new User();
                 $user->name = $request->name;
@@ -147,7 +148,7 @@ class AdminViewController extends Controller
             $user = User::where('mobile', $request->reset_mobile)->first();
             if ($user)
             {
-                if ($request->user_otp == 0000 || $request->user_otp == session('otp'))
+                if (/*$request->user_otp == 0000 ||*/ $request->user_otp == session('otp'))
                 {
                     $user->password = Hash::make($request->new_password);
                     $user->save();
@@ -184,7 +185,7 @@ class AdminViewController extends Controller
         ]);
 
         try {
-            if ($request->user_otp == 0000 || $request->user_otp == session('otp'))
+            if (/*$request->user_otp == 0000 ||*/ $request->user_otp == session('otp'))
             {
                 if ($request->req_from == 'app')
                 {
@@ -243,16 +244,28 @@ class AdminViewController extends Controller
 
     public function viewPages(Request $request)
     {
+        $pageContent = null;
+        $pageTitle = '';
         if (str()->contains(url()->current(), 'privacy-policy'))
         {
             $pageContent = PageContent::where(['page_type' => 'policy'])->first();
-            return response()->json(['content' => $pageContent], 200);
+            $pageTitle  = 'Privacy Policy';
         } elseif (str()->contains(url()->current(), 'support-center'))
         {
             $pageContent = PageContent::where(['page_type' => 'support'])->first();
-            return response()->json(['content' => $pageContent], 200);
+            $pageTitle  = 'Support';
         }
-        return response()->json('Something went wrong. Please try again.', 500);
+        if (str()->contains(url()->current(), '/api/'))
+        {
+            if (isset($pageContent))
+                return response()->json(['content' => $pageContent], 200);
+            else
+                return response()->json('Something went wrong. Please try again.', 500);
+        }
+        return view('backend.support-page', [
+            'pageTitle' => $pageTitle,
+            'pageContent'   => $pageContent,
+        ]);
     }
 
     public function getTotalPendingOrders()
