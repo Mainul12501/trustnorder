@@ -36,6 +36,7 @@ Route::get('/support-center', [AdminViewController::class, 'viewPages'])->name('
 Route::get('/get-total-pending-orders', [AdminViewController::class, 'getTotalPendingOrders'])->name('get-total-pending-orders');
 Route::get('/privacy-policy', [AdminViewController::class, 'viewPages']);
 Route::get('/support-center', [AdminViewController::class, 'viewPages']);
+Route::get('/terms-condition', [AdminViewController::class, 'viewPages']);
 
 
 

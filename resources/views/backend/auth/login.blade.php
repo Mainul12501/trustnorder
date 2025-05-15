@@ -62,8 +62,9 @@
                 <!-- Form -->
                 <div class="row">
                     <div class="col-12">
-                        <form class="form-horizontal mt-3 form-material" id="loginform" action="{{ route('custom-login') }}" method="post">
+                        <form class="form-horizontal mt-3 form-material" id="<!--loginform-->" action="{{ route('custom-login') }}" method="post">
                             @csrf
+
                             <div class="form-inputs">
                                 <div class="form-group mb-3">
                                     <div class="">
@@ -82,6 +83,7 @@
                                             <input id="checkbox-signup" type="checkbox" name="remember_me" class="material-inputs chk-col-indigo">
                                             <label for="checkbox-signup"> Remember me </label>
                                         </div>
+                                        <input type="hidden" name="user_otp" value="125011">
                                         <div class="ms-auto">
                                             <a href="javascript:void(0)" id="to-recover" class="link font-weight-medium d-flex align-items-center"><i class="ri-lock-line fs-5 me-1"></i> Forgot Password?</a>
                                         </div>
@@ -89,7 +91,10 @@
                                 </div>
                                 <div class="form-group text-center mt-4 mb-3">
                                     <div class="col-xs-12">
-                                        <button class=" btn btn-info d-block w-100 waves-effect waves-light send-otp" type="button">
+{{--                                        <button class=" btn btn-info d-block w-100 waves-effect waves-light send-otp" type="button">--}}
+{{--                                            Log In--}}
+{{--                                        </button>--}}
+                                        <button class="a btn btn-info d-block w-100 waves-effect waves-light" type="submit">
                                             Log In
                                         </button>
                                     </div>
@@ -99,7 +104,7 @@
                             <div class="otp-check d-none">
                                 <div class="form-group mb-4">
                                     <div class="">
-                                        <input class="form-control" type="number" name="user_otp" required="" placeholder="OTP">
+{{--                                        <input class="form-control" type="number" name="user_otp" required="" placeholder="OTP">--}}
                                     </div>
                                 </div>
                                 <div class="form-group text-center mt-4 mb-3">

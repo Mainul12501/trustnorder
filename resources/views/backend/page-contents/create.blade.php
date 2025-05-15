@@ -25,6 +25,7 @@
                             <select name="page_type" class="form-control select2 w-100" id="" {{ $isShown ? 'disabled' : '' }}>
                                 <option value="policy" {{ isset($pageContent) && $pageContent->page_type == 'policy' ? 'selected' : '' }} >Policy</option>
                                 <option value="support" {{ isset($pageContent) && $pageContent->page_type == 'support' ? 'selected' : '' }} >Support</option>
+                                <option value="terms" {{ isset($pageContent) && $pageContent->page_type == 'terms' ? 'selected' : '' }} >terms & Conditions</option>
                             </select>
                         </div>
                         <div class="mt-2">
