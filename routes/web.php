@@ -28,8 +28,8 @@ Route::get('/', function () {
 
 Route::any('/reset-send-otp', [AdminViewController::class, 'resetSendOtp'])->name('reset-send-otp');
 Route::any('/send-otp', [AdminViewController::class, 'sendOtp'])->name('send-otp');
-Route::post('/custom-register', [AdminViewController::class, 'register'])->name('custom-register');
 Route::post('/custom-login', [AdminViewController::class, 'login'])->name('custom-login');
+Route::post('/custom-register', [AdminViewController::class, 'register'])->name('custom-register');
 Route::post('/reset-user-password', [AdminViewController::class, 'resetPassword'])->name('reset-password');
 Route::get('/privacy-policy', [AdminViewController::class, 'viewPages'])->name('privacy-policy');
 Route::get('/support-center', [AdminViewController::class, 'viewPages'])->name('support-center');
@@ -37,6 +37,7 @@ Route::get('/get-total-pending-orders', [AdminViewController::class, 'getTotalPe
 Route::get('/privacy-policy', [AdminViewController::class, 'viewPages']);
 Route::get('/support-center', [AdminViewController::class, 'viewPages']);
 Route::get('/terms-condition', [AdminViewController::class, 'viewPages']);
+Route::get('/about-us', [AdminViewController::class, 'viewPages']);
 
 
 

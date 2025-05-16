@@ -22,6 +22,8 @@ Route::post('/custom-login', [AdminViewController::class, 'login']);
 Route::get('/registered-user-details', [UserController::class, 'registeredUserDetails']);
 Route::get('/privacy-policy', [AdminViewController::class, 'viewPages']);
 Route::get('/support-center', [AdminViewController::class, 'viewPages']);
+Route::get('/terms-condition', [AdminViewController::class, 'viewPages']);
+Route::get('/about-us', [AdminViewController::class, 'viewPages']);
 
 
 Route::get('/get-basic-settings', [ApiController::class, 'getBasicSettings']);

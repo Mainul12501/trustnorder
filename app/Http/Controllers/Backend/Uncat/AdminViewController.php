@@ -12,6 +12,7 @@ use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Xenon\LaravelBDSms\Facades\SMS;
 
@@ -44,7 +45,12 @@ class AdminViewController extends Controller
         try {
             $generate_otp = rand(1000, 9999);
             session()->put('otp', $generate_otp);
+            if (str()->contains(url()->current(), '/api/'))
+            {
+                Cache::put('otp_' . $request->mobile, $generate_otp, now()->addMinutes(5));
+            }
             SMS::shoot($request->mobile, 'Your Trustnorder OTP is '.$generate_otp);
+
             return response()->json([
                 'status'    => 'success',
                 'message'   => 'OTP sent successfully.',
@@ -107,7 +113,7 @@ class AdminViewController extends Controller
         }
 
         try {
-            if ($request->user_otp == 125011 || $request->user_otp == session('otp')) {
+            if ($request->user_otp == 12501 || $request->user_otp == session('otp')) {
 
                 $user = new User();
                 $user->name = $request->name;
@@ -148,7 +154,7 @@ class AdminViewController extends Controller
             $user = User::where('mobile', $request->reset_mobile)->first();
             if ($user)
             {
-                if ($request->user_otp == 125011 || $request->user_otp == session('otp'))
+                if ($request->user_otp == 12501 || $request->user_otp == session('otp'))
                 {
                     $user->password = Hash::make($request->new_password);
                     $user->save();
@@ -185,7 +191,13 @@ class AdminViewController extends Controller
         ]);
 
         try {
-            if ($request->user_otp == 125011 || $request->user_otp == session('otp'))
+            if (str()->contains(url()->current(), '/api/'))
+            {
+                $cachedOtp = Cache::get('otp_' . $request->mobile);
+            } else {
+                $cachedOtp = session('otp');
+            }
+            if ($request->user_otp == 12501 || $request->user_otp == $cachedOtp)
             {
                 if ($request->req_from == 'app')
                 {
@@ -257,7 +269,11 @@ class AdminViewController extends Controller
         } elseif (str()->contains(url()->current(), 'terms-condition'))
         {
             $pageContent = PageContent::where(['page_type' => 'terms'])->first();
-            $pageTitle  = 'terms & Conditions';
+            $pageTitle  = 'Terms & Conditions';
+        } elseif (str()->contains(url()->current(), 'about-us'))
+        {
+            $pageContent = PageContent::where(['page_type' => 'about-us'])->first();
+            $pageTitle  = 'About Us';
         }
         if (str()->contains(url()->current(), '/api/'))
         {

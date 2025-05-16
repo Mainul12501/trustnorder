@@ -26,6 +26,7 @@
                                 <option value="policy" {{ isset($pageContent) && $pageContent->page_type == 'policy' ? 'selected' : '' }} >Policy</option>
                                 <option value="support" {{ isset($pageContent) && $pageContent->page_type == 'support' ? 'selected' : '' }} >Support</option>
                                 <option value="terms" {{ isset($pageContent) && $pageContent->page_type == 'terms' ? 'selected' : '' }} >terms & Conditions</option>
+                                <option value="about-us" {{ isset($pageContent) && $pageContent->page_type == 'about-us' ? 'selected' : '' }} >About Us</option>
                             </select>
                         </div>
                         <div class="mt-2">
