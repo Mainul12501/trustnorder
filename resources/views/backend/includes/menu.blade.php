@@ -38,7 +38,7 @@
                         <li class="sidebar-item">
                             <a href="{{ route('users.index') }}" class="sidebar-link">
                                 <i class="mdi mdi-format-align-right"></i>
-                                <span class="hide-menu"> Users </span>
+                                <span class="hide-menu"> User Details </span>
                             </a>
                         </li>
 

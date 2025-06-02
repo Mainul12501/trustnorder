@@ -1,7 +1,7 @@
 @extends('backend.master')
 
 @section('title', 'Users')
-@section('breadcrumb', 'Users')
+@section('breadcrumb', 'User Details')
 
 @section('body')
     <div class="container-fluid">
@@ -9,7 +9,7 @@
             <div class="col-12">
                 <div class="card card-hover">
                     <div class="card-header bg-info">
-                        <h4 class="text-white float-start">Users</h4>
+                        <h4 class="text-white float-start">User Details</h4>
 {{--                        @can('create-permission-category')--}}
                             <a href="{{ route('users.create') }}" class="rounded-circle float-end text-white text-light f-s-20 ">
                                 <span class="f-s-22 border-5"><i class="mdi mdi-plus-circle-outline"></i></span>

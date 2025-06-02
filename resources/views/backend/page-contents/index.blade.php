@@ -40,7 +40,8 @@
                                         <td class="">
                                             <a href="{{ route('page-contents.show', $pageContent->id) }}" class="btn btn-sm btn-primary mt-1">
                                                 <i class="mdi mdi-eye"></i>
-                                            </a> <br>
+                                            </a>
+                                            <br>
                                             <a href="{{ route('page-contents.edit', $pageContent->id ) }}" class="btn btn-sm btn-warning mt-1">
                                                 <i class="mdi mdi-square-edit-outline"></i>
                                             </a> <br>

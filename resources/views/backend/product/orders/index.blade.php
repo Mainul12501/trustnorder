@@ -21,8 +21,8 @@
                             <div class="text-center pb-3">
                                 <a href="{{ route('orders.index', ['order_status' => 'pending']) }}" class="btn btn-primary">Pending</a>
                                 <a href="{{ route('orders.index', ['order_status' => 'accepted']) }}" class="btn btn-primary">Accepted</a>
-                                <a href="{{ route('orders.index', ['order_status' => 'processing']) }}" class="btn btn-primary">Processing</a>
-                                <a href="{{ route('orders.index', ['order_status' => 'on_delivery']) }}" class="btn btn-primary">Our For Delivery</a>
+{{--                                <a href="{{ route('orders.index', ['order_status' => 'processing']) }}" class="btn btn-primary">Processing</a>--}}
+{{--                                <a href="{{ route('orders.index', ['order_status' => 'on_delivery']) }}" class="btn btn-primary">Our For Delivery</a>--}}
                                 <a href="{{ route('orders.index', ['order_status' => 'completed']) }}" class="btn btn-primary">Completed</a>
                                 <a href="{{ route('orders.index', ['order_status' => 'rejected']) }}" class="btn btn-primary">Rejected</a>
                             </div>
@@ -39,6 +39,7 @@
                                     <th>Cancel Req Status</th>
                                     <th>Order Status</th>
                                     <th>Payment Status</th>
+                                    <th>Change Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -116,19 +117,26 @@
                                         </td>
 
                                         <td>
-{{--                                            <select name="order_status" class="form-control change-order-status" data-id="{{ $order->id }}" id="">--}}
-{{--                                                <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending</option>--}}
-{{--                                                <option value="accepted" {{ $order->order_status == 'accepted' ? 'selected' : '' }}>Accepted</option>--}}
-{{--                                                <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Processing</option>--}}
-{{--                                                <option value="on_delivery" {{ $order->order_status == 'on_delivery' ? 'selected' : '' }}>Our For Delivery</option>--}}
-{{--                                                <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Completed</option>--}}
-{{--                                                <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>--}}
-{{--                                            </select>--}}
+
                                             {{ $order->order_status ?? '' }}
                                         </td>
                                         <td>
                                             <p class="mb-0">Type: <span>{{ $order->order_payment_type ?? '' }}</span>
                                             <p>Status: <span>{{ $order->order_payment_status ?? '' }}</span>
+                                        </td>
+
+                                        <td>
+                                            @if($order->order_status == 'accepted')
+                                                <select name="order_status" class="form-control change-order-status" data-id="{{ $order->id }}" id="">
+                                                    {{--                                                    <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending</option>--}}
+                                                    {{--                                                    <option value="accepted" {{ $order->order_status == 'accepted' ? 'selected' : '' }}>Accepted</option>--}}
+                                                    {{--                                                    <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Processing</option>--}}
+                                                    {{--                                                    <option value="on_delivery" {{ $order->order_status == 'on_delivery' ? 'selected' : '' }}>Our For Delivery</option>--}}
+                                                    <option disabled selected>Change Status</option>
+                                                    <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                                    <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                                </select>
+                                            @endif
                                         </td>
                                         <td class="">
                                             @if($order->status == 1 && $order->order_status != 'pending')

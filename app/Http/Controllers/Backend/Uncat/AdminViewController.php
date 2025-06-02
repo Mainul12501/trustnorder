@@ -113,7 +113,13 @@ class AdminViewController extends Controller
         }
 
         try {
-            if ($request->user_otp == 12501 || $request->user_otp == session('otp')) {
+            if (str()->contains(url()->current(), '/api/'))
+            {
+                $cachedOtp = Cache::get('otp_' . $request->mobile);
+            } else {
+                $cachedOtp = session('otp');
+            }
+            if ($request->user_otp == 1250 || $request->user_otp == $cachedOtp) {
 
                 $user = new User();
                 $user->name = $request->name;
@@ -154,7 +160,13 @@ class AdminViewController extends Controller
             $user = User::where('mobile', $request->reset_mobile)->first();
             if ($user)
             {
-                if ($request->user_otp == 12501 || $request->user_otp == session('otp'))
+                if (str()->contains(url()->current(), '/api/'))
+                {
+                    $cachedOtp = Cache::get('otp_' . $request->mobile);
+                } else {
+                    $cachedOtp = session('otp');
+                }
+                if ($request->user_otp == 1250 || $request->user_otp == $cachedOtp)
                 {
                     $user->password = Hash::make($request->new_password);
                     $user->save();
@@ -197,7 +209,7 @@ class AdminViewController extends Controller
             } else {
                 $cachedOtp = session('otp');
             }
-            if ($request->user_otp == 12501 || $request->user_otp == $cachedOtp)
+            if ($request->user_otp == 1250 || $request->user_otp == $cachedOtp)
             {
                 if ($request->req_from == 'app')
                 {

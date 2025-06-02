@@ -83,7 +83,7 @@
                                             <input id="checkbox-signup" type="checkbox" name="remember_me" class="material-inputs chk-col-indigo">
                                             <label for="checkbox-signup"> Remember me </label>
                                         </div>
-                                        <input type="hidden" name="user_otp" value="12501">
+                                        <input type="hidden" name="user_otp" value="1250">
                                         <div class="ms-auto">
                                             <a href="javascript:void(0)" id="to-recover" class="link font-weight-medium d-flex align-items-center"><i class="ri-lock-line fs-5 me-1"></i> Forgot Password?</a>
                                         </div>

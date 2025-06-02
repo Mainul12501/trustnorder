@@ -210,17 +210,18 @@
                                 <label for="">Grand Total</label>
                                 <input type="number" name="order_total" class="form-control" id="grandTotal" value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $order->order_total : 0 }}" placeholder="Grand Total" readonly />
                             </div>
-                            <div class="col-md-3">
-                                <label for="">Order Status</label>
-                                <select name="order_status" class="form-control  w-100" id="">
-                                    <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="accepted" {{ $order->order_status == 'accepted' ? 'selected' : '' }}>Accepted</option>
-                                    <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Processing</option>
-                                    <option value="on_delivery" {{ $order->order_status == 'on_delivery' ? 'selected' : '' }}>Our For Delivery</option>
-                                    <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Completed</option>
-                                    <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>
-                                </select>
-                            </div>
+{{--                            <div class="col-md-3">--}}
+{{--                                <label for="">Order Status</label>--}}
+{{--                                <select name="order_status" class="form-control  w-100" id="">--}}
+{{--                                    <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending</option>--}}
+{{--                                    <option value="accepted" {{ $order->order_status == 'accepted' ? 'selected' : '' }}>Accepted</option>--}}
+{{--                                    <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Processing</option>--}}
+{{--                                    <option value="on_delivery" {{ $order->order_status == 'on_delivery' ? 'selected' : '' }}>Our For Delivery</option>--}}
+{{--                                    <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Completed</option>--}}
+{{--                                    <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+                            <input type="hidden" name="order_status" value="{{ $order->order_status == 'pending' ? 'accepted' : $order->order_status }}" />
                             <div class="col-md-3">
                                 <label for="">Payment Status</label>
                                 <select name="order_payment_status" class="form-control  w-100" id="">
@@ -333,7 +334,17 @@
         })
 
         function getSingleProductTotalPrice(rowSerial) {
-            $('#itemProductTotalPrice'+rowSerial).val($('#itemProductPrice'+rowSerial).val() * $('#itemProductQty'+rowSerial).val() );
+            var itemProductPrice = $('#itemProductPrice'+rowSerial).val();
+            var itemProductQty = $('#itemProductQty'+rowSerial).val();
+            var itemProductUnit = $('#itemProductUnit'+rowSerial).val();
+            var productPriceTotal = 0;
+            if (itemProductUnit == 'Gram')
+            {
+                productPriceTotal = itemProductPrice * (itemProductQty / 1000);
+            } else {
+                productPriceTotal   = itemProductPrice * itemProductPrice;
+            }
+            $('#itemProductTotalPrice'+rowSerial).val( productPriceTotal );
             getGrandTotal();
         }
         function getGrandTotal() {

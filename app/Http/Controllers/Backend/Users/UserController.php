@@ -78,7 +78,6 @@ class UserController extends Controller
             'name'  => 'required',
             'mobile'    => 'required',
         ]);
-
         try {
             DB::transaction(function () use ($request, $id){
                 User::createOrUpdateUser($request, $id);

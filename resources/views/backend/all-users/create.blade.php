@@ -20,6 +20,7 @@
                         @if(isset($user))
                             @method('put')
                         @endif
+                        <input type="hidden" name="exist_role" value="{{ isset($user) ? $user->role : 'user' }}">
                         <div>
                             <label for="">User Name <span class="text-danger">(required)</span></label>
                             <input type="text" required name="name" {{ $isShown ? 'readonly' : '' }} class="form-control" value="{{ isset($user) ? $user->name : '' }}" />
@@ -64,15 +65,15 @@
                                 <input type="text" class="form-control" name="road_number" value="{{ isset($user) ? $user->road_number : '' }}" />
                             </div>
                         </div>
-                        @if(auth()->user()->role == 'admin')
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <label for="">{{ isset($user) ? 'Change' : '' }} Password</label>
-                                    <input type="text" name="password" {{ isset($user) ? '' : 'required' }} class="form-control">
-                                    @error('password') <span class="text-danger">{{ $errors->first('password') ?? '' }}</span> @enderror
-                                </div>
-                            </div>
-                        @endif
+{{--                        @if(auth()->user()->role == 'admin')--}}
+{{--                            <div class="row mt-2">--}}
+{{--                                <div class="col-12">--}}
+{{--                                    <label for="">{{ isset($user) ? 'Change' : '' }} Password</label>--}}
+{{--                                    <input type="text" name="password" {{ isset($user) ? '' : 'required' }} class="form-control">--}}
+{{--                                    @error('password') <span class="text-danger">{{ $errors->first('password') ?? '' }}</span> @enderror--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
                         @if(!$isShown)
                         <div class="mt-2">
                             <input type="submit" class="btn btn-success btn-sm float-end" value="{{ isset($user) ? 'Update' : 'Create' }} User" />
