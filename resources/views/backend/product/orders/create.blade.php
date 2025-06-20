@@ -71,7 +71,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="productName{{$key}}">Unit</label>
-                                                    <select name="products[{{$key}}][unit]" class="form-control " id="itemProductUnit{{$key}}">
+                                                    <select name="products[{{$key}}][unit]" class="form-control item-unit" id="itemProductUnit{{$key}}">
                                                         <option value="Kg" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Kg' ? 'selected' : '' }}>Kg</option>
                                                         <option value="Gram" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Gram' ? 'selected' : '' }} >Gram</option>
                                                         <option value="Piece" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Piece' ? 'selected' : '' }} >Piece</option>
@@ -101,7 +101,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="itemProductUnit0">Unit</label>
-                                            <select name="products[0][unit]" class="form-control " id="itemProductUnit0">
+                                            <select name="products[0][unit]" class="form-control item-unit" id="itemProductUnit0">
                                                 <option value="Kg">Kg</option>
                                                 <option value="Gram" >Gram</option>
                                                 <option value="Piece" >Piece</option>
@@ -147,7 +147,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="productName{{$key}}">Unit</label>
-                                                <select name="products[{{$key}}][unit]" class="form-control " id="itemProductUnit{{$key}}">
+                                                <select name="products[{{$key}}][unit]" class="form-control  item-unit" id="itemProductUnit{{$key}}">
                                                     <option value="Kg" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Kg' ? 'selected' : '' }}>Kg</option>
                                                     <option value="Gram" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Gram' ? 'selected' : '' }} >Gram</option>
                                                     <option value="Piece" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Piece' ? 'selected' : '' }} >Piece</option>
@@ -179,7 +179,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="productName{{$key}}">Unit</label>
-                                                <select name="products[{{$key}}][unit]" class="form-control " id="itemProductUnit{{$key}}">
+                                                <select name="products[{{$key}}][unit]" class="form-control  item-unit" id="itemProductUnit{{$key}}">
                                                     <option value="Kg" {{ isset($itemProduct->unit) && $itemProduct->unit == 'Kg' ? 'selected' : '' }}>Kg</option>
                                                     <option value="Gram" {{ isset($itemProduct->unit) && $itemProduct->unit == 'Gram' ? 'selected' : '' }} >Gram</option>
                                                     <option value="Piece" {{ isset($itemProduct->unit) && $itemProduct->unit == 'Piece' ? 'selected' : '' }} >Piece</option>
@@ -287,7 +287,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label for="itemProductUnit${rowSerial}">Unit</label>
-                                        <select name="products[${rowSerial}][unit]" class="form-control " id="itemProductUnit${rowSerial}">
+                                        <select name="products[${rowSerial}][unit]" class="form-control  item-unit" id="itemProductUnit${rowSerial}">
                                             <option value="Kg">Kg</option>
                                             <option value="Gram">Gram</option>
                                             <option value="Piece">Piece</option>
@@ -331,18 +331,22 @@
             $(document).on('keyup', '#deliveryCharge', function () {
                 getGrandTotal();
             });
+            $(document).on('change', '.item-unit', function () {
+                var rowSerial = $(this).closest('.row').attr('data-row');
+                getSingleProductTotalPrice(rowSerial);
+            });
         })
 
         function getSingleProductTotalPrice(rowSerial) {
-            var itemProductPrice = $('#itemProductPrice'+rowSerial).val();
-            var itemProductQty = $('#itemProductQty'+rowSerial).val();
+            var itemProductPrice = parseFloat($('#itemProductPrice'+rowSerial).val());
+            var itemProductQty = parseInt($('#itemProductQty'+rowSerial).val());
             var itemProductUnit = $('#itemProductUnit'+rowSerial).val();
             var productPriceTotal = 0;
             if (itemProductUnit == 'Gram')
             {
                 productPriceTotal = itemProductPrice * (itemProductQty / 1000);
             } else {
-                productPriceTotal   = itemProductPrice * itemProductPrice;
+                productPriceTotal   = itemProductPrice * itemProductQty;
             }
             $('#itemProductTotalPrice'+rowSerial).val( productPriceTotal );
             getGrandTotal();
