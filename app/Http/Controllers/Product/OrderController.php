@@ -217,7 +217,7 @@ class OrderController extends Controller
 
     public function orderHistory(User $user)
     {
-        $orders = Order::where('user_id', $user->id)->with('user', 'orderDetails')->paginate(20);
+        $orders = Order::where('user_id', $user->id)->with('user', 'orderDetails')->latest()->paginate(20);
         return response()->json([
             'orders'    => $orders
         ]);
@@ -229,7 +229,7 @@ class OrderController extends Controller
         {
             $orders = $orders->where('order_status', $request->order_status);
         }
-            $orders = $orders->paginate(20);
+            $orders = $orders->latest()->paginate(20);
         return response()->json([
             'orders'    => $orders
         ]);

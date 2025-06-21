@@ -76,6 +76,7 @@
                                                         <option value="Gram" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Gram' ? 'selected' : '' }} >Gram</option>
                                                         <option value="Piece" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Piece' ? 'selected' : '' }} >Piece</option>
                                                         <option value="Liter" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Liter' ? 'selected' : '' }} >Liter</option>
+                                                        <option value="Millilitre" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Millilitre' ? 'selected' : '' }} >Millilitre</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2">
@@ -106,6 +107,7 @@
                                                 <option value="Gram" >Gram</option>
                                                 <option value="Piece" >Piece</option>
                                                 <option value="Liter" >Liter</option>
+                                                <option value="Millilitre" >Millilitre</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2">
@@ -152,6 +154,7 @@
                                                     <option value="Gram" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Gram' ? 'selected' : '' }} >Gram</option>
                                                     <option value="Piece" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Piece' ? 'selected' : '' }} >Piece</option>
                                                     <option value="Liter" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Liter' ? 'selected' : '' }} >Liter</option>
+                                                    <option value="Millilitre" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Millilitre' ? 'selected' : '' }} >Millilitre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -184,6 +187,7 @@
                                                     <option value="Gram" {{ isset($itemProduct->unit) && $itemProduct->unit == 'Gram' ? 'selected' : '' }} >Gram</option>
                                                     <option value="Piece" {{ isset($itemProduct->unit) && $itemProduct->unit == 'Piece' ? 'selected' : '' }} >Piece</option>
                                                     <option value="Liter" {{ isset($itemProduct->unit) && $itemProduct->unit == 'Liter' ? 'selected' : '' }} >Liter</option>
+                                                    <option value="Millilitre" {{ isset($itemProduct->unit) && $itemProduct->item_unit == 'Millilitre' ? 'selected' : '' }} >Millilitre</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -292,6 +296,7 @@
                                             <option value="Gram">Gram</option>
                                             <option value="Piece">Piece</option>
                                             <option value="Liter">Liter</option>
+                                            <option value="Millilitre">Millilitre</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
