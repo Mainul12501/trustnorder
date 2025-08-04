@@ -30,6 +30,7 @@ return new class extends Migration {
             $table->text('site_moto')->nullable();
             $table->text('seo_header')->nullable();
             $table->text('seo_footer')->nullable();
+            $table->float('delivery_charge', 10, 2)->default(0)->nullable();
             $table
                 ->tinyInteger('status')
                 ->default(1)

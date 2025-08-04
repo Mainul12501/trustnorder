@@ -24,14 +24,14 @@ class OrderController extends Controller
     {
         if (isset($request->type) && $request->type == 'new')
         {
-            $orders = Order::where('is_viewed', 0)->latest()->get();
+            $orders = Order::where('is_viewed', 0)->with('orderDetails')->latest()->get();
         }
         elseif (isset($request->order_status))
         {
-            $orders = Order::where('order_status', $request->order_status)->latest()->get();
+            $orders = Order::where('order_status', $request->order_status)->with('orderDetails')->latest()->get();
         }
         else {
-            $orders = Order::latest()->get();
+            $orders = Order::latest()->with('orderDetails')->get();
         }
         return view('backend.product.orders.index', [
             'isShown'   => false,
@@ -54,8 +54,32 @@ class OrderController extends Controller
     {
         try {
             DB::transaction(function () use ($request){
-                $order = Order::createOrder($request);
+//                $order = Order::createOrder($request);
+                $order = new Order();
+                $order->user_id    = ViewHelper::loggedUser()->id;
+                $order->order_total = $request->order_total;
+                $order->delivery_charge = $request->delivery_charge;
+                $order->order_status = 'pending';
+                $order->order_payment_status    = $request->order_payment_status;
+                $order->status = 1;
+                $order->save();
+//                $order->orderDetails->each->delete();
+                foreach ($request->items as $key => $product)
+                {
+                    $orderDetails = new OrderDetails();
+                    $orderDetails->order_id = $order->id;
+//            $orderDetails->category_id  = $request->;
+                    $orderDetails->product_id   = $request->product_id;
+                    $orderDetails->product_name = $product['name'] ?? '';
+                    $orderDetails->item_qty = $product['qty'] ?? 0;
+                    $orderDetails->unit = $product['unit'] ?? '';
+                    $orderDetails->item_price   = $product['price'] ?? 0;
+                    $orderDetails->item_total_price = $product['total_price'] ?? 0;
+                    $orderDetails->save();
+                }
             });
+            SMS::shoot(ViewHelper::loggedUser()->mobile ?? '0000000000', "Your Order placed successfully. Your order ID #$order->id");
+            SMS::shoot('01820001124' ?? '0000000000', "New Order Placed. Order ID #$order->id");
             return ViewHelper::returnSuccessMessage('Order Placed Successfully.');
         } catch (\Exception $exception)
         {
@@ -80,7 +104,7 @@ class OrderController extends Controller
         $hasOrderDetails = false;
         $order->is_viewed = 1;
         $order->save();
-        if (count($order->orderDetails) > 0 && $order->order_status != 'pending')
+        if (count($order->orderDetails) > 0 /*&& $order->order_status != 'pending'*/)
         {
             $hasOrderDetails = true;
         }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Backend\Order\Order;
 use App\Models\Backend\Product;
 use App\Models\Backend\Product\Category;
+use App\Models\BasicSetting;
 use App\Models\PageContent;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -222,7 +223,8 @@ class AdminViewController extends Controller
                             return response()->json([
                                 'user'  => $this->user,
                                 'auth_token' => $this->user->createToken('auth_token')->plainTextToken,
-                                'status'    => 200
+                                'status'    => 200,
+//                                'site_setting'  => BasicSetting::select('id', 'delivery_charge')->first()
                             ]);
                         }
                     } else {

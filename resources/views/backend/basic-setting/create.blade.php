@@ -90,6 +90,10 @@
                                 <label for="">Linkedin Profile Link</label>
                                 <input type="text" name="linkedin" {{ isset($isShown) ? 'readonly' : '' }} class="form-control" value="{{ isset($basicSetting) ? $basicSetting->linkedin : '' }}" />
                             </div>
+{{--                            <div class="col-md-6">--}}
+{{--                                <label for="">Delivery Charge</label>--}}
+{{--                                <input type="number" min="0" name="delivery_charge" {{ isset($isShown) ? 'readonly' : '' }} class="form-control" value="{{ isset($basicSetting) ? $basicSetting->delivery_charge : '' }}" />--}}
+{{--                            </div>--}}
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6">

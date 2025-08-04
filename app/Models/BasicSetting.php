@@ -29,6 +29,7 @@ class BasicSetting extends Model
         'seo_header',
         'seo_footer',
         'status',
+        'delivery_charge',
     ];
 
 
@@ -60,6 +61,7 @@ class BasicSetting extends Model
         $basicSetting->site_moto    = $request->site_moto;
         $basicSetting->seo_header   = $request->seo_header;
         $basicSetting->seo_footer   = $request->seo_footer;
+        $basicSetting->delivery_charge   = $request->delivery_charge;
         $basicSetting->status   = 1;
         $basicSetting->save();
         return $basicSetting;

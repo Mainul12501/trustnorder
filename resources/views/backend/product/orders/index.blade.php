@@ -25,6 +25,7 @@
 {{--                                <a href="{{ route('orders.index', ['order_status' => 'on_delivery']) }}" class="btn btn-primary">Our For Delivery</a>--}}
                                 <a href="{{ route('orders.index', ['order_status' => 'completed']) }}" class="btn btn-primary">Completed</a>
                                 <a href="{{ route('orders.index', ['order_status' => 'rejected']) }}" class="btn btn-primary">Rejected</a>
+                                <a href="{{ route('orders.index', ['order_status' => 'delivery_complete']) }}" class="btn btn-primary">Delivery Complete</a>
                             </div>
                         @endif
                         <div class="table-responsive">
@@ -33,7 +34,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Order Id</th>
-                                    <th>Method</th>
+{{--                                    <th>Method</th>--}}
                                     <th>Ordered Items</th>
                                     <th>Note</th>
                                     <th>Cancel Req Status</th>
@@ -48,60 +49,69 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $order->id }}</td>
-                                        <td>{{ $order->order_placing_method ?? '' }}</td>
-                                         <td>
-                                             @if($order->order_placing_method == 'image')
-                                                 @php
-                                                     $userOrderImages = json_decode($order->user_order_image);
-                                                 @endphp
-                                                 @if(!is_null($order->user_order_image))
-                                                     @if(!empty($userOrderImages) && is_array($userOrderImages) && count($userOrderImages) > 0)
-                                                         @foreach($userOrderImages as $imgKey => $img)
-                                                             <span class="m-1">
-                                                                <a href="{{ route('orders.edit', $order->id) }}"><img src="{{ asset($img) }}" alt="" style="height: 80px" /></a>
-                                                            </span>
-                                                         @endforeach
-                                                     @endif
+{{--                                        <td>{{ $order->order_placing_method ?? '' }}</td>--}}
+{{--                                         <td>--}}
+{{--                                             @if($order->order_placing_method == 'image')--}}
+{{--                                                 @php--}}
+{{--                                                     $userOrderImages = json_decode($order->user_order_image);--}}
+{{--                                                 @endphp--}}
+{{--                                                 @if(!is_null($order->user_order_image))--}}
+{{--                                                     @if(!empty($userOrderImages) && is_array($userOrderImages) && count($userOrderImages) > 0)--}}
+{{--                                                         @foreach($userOrderImages as $imgKey => $img)--}}
+{{--                                                             <span class="m-1">--}}
+{{--                                                                <a href="{{ route('orders.edit', $order->id) }}"><img src="{{ asset($img) }}" alt="" style="height: 80px" /></a>--}}
+{{--                                                            </span>--}}
+{{--                                                         @endforeach--}}
+{{--                                                     @endif--}}
 
-                                                 @endif
+{{--                                                 @endif--}}
 
-                                             @elseif($order->order_placing_method == 'items')
-                                                 <div>
-                                                     @if(isset($order->orderDetails) && count($order->orderDetails) > 0)
-                                                         <ol class="">
-                                                             @foreach($order->orderDetails as $key => $item)
-                                                                 @if($key > 2)
-                                                                     <li class="nav-item mt-1">have more {{ count($order->orderDetails) -3 }} products.</li>
-                                                                     @break
-                                                                 @else
-                                                                     <li class="nav-item mt-1">{{ $item->product_name }}</li>
-                                                                 @endif
-                                                             @endforeach
-                                                         </ol>
+{{--                                             @elseif($order->order_placing_method == 'items')--}}
+{{--                                                 <div>--}}
+{{--                                                     @if(isset($order->orderDetails) && count($order->orderDetails) > 0)--}}
+{{--                                                         <ol class="">--}}
+{{--                                                             @foreach($order->orderDetails as $key => $item)--}}
+{{--                                                                 @if($key > 2)--}}
+{{--                                                                     <li class="nav-item mt-1">have more {{ count($order->orderDetails) -3 }} products.</li>--}}
+{{--                                                                     @break--}}
+{{--                                                                 @else--}}
+{{--                                                                     <li class="nav-item mt-1">{{ $item->product_name }}</li>--}}
+{{--                                                                 @endif--}}
+{{--                                                             @endforeach--}}
+{{--                                                         </ol>--}}
 
-                                                     @else
-                                                         @if(isset($order->user_inputed_items))
-                                                             <ol class="">
-                                                                 @php
-                                                                     $userItems = json_decode($order->user_inputed_items);
-                                                                 @endphp
-                                                                 @if (!empty($userItems) && is_array($userItems) && count($userItems) > 0)
-                                                                     @foreach($userItems as $key => $item)
-                                                                         @if($key > 2)
-                                                                             <li class="nav-item mt-1">have more {{ count($userItems) -3 }} products.</li>
-                                                                             @break
-                                                                         @else
-                                                                             <li class="nav-item mt-1">{{ $item->name }}</li>
-                                                                         @endif
-                                                                     @endforeach
-                                                                 @endif
-                                                             </ol>
-                                                         @endif
-                                                     @endif
-                                                 </div>
-                                             @endif
-                                         </td>
+{{--                                                     @else--}}
+{{--                                                         @if(isset($order->user_inputed_items))--}}
+{{--                                                             <ol class="">--}}
+{{--                                                                 @php--}}
+{{--                                                                     $userItems = json_decode($order->user_inputed_items);--}}
+{{--                                                                 @endphp--}}
+{{--                                                                 @if (!empty($userItems) && is_array($userItems) && count($userItems) > 0)--}}
+{{--                                                                     @foreach($userItems as $key => $item)--}}
+{{--                                                                         @if($key > 2)--}}
+{{--                                                                             <li class="nav-item mt-1">have more {{ count($userItems) -3 }} products.</li>--}}
+{{--                                                                             @break--}}
+{{--                                                                         @else--}}
+{{--                                                                             <li class="nav-item mt-1">{{ $item->name }}</li>--}}
+{{--                                                                         @endif--}}
+{{--                                                                     @endforeach--}}
+{{--                                                                 @endif--}}
+{{--                                                             </ol>--}}
+{{--                                                         @endif--}}
+{{--                                                     @endif--}}
+{{--                                                 </div>--}}
+{{--                                             @endif--}}
+{{--                                         </td>--}}
+                                        <td>
+                                            <ul class="nav ">
+                                                @if($order->has('orderDetails'))
+                                                    @foreach($order->orderDetails as $orderDetails)
+                                                        <li>{{ $orderDetails?->product_name ?? 'product name' }} (qty: {{ $orderDetails?->item_qty ?? 0 }} - Total: {{ $orderDetails?->item_total_price ?? 0 }} Tk)</li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
 
+                                        </td>
                                         <td>{!! str()->words(strip_tags($order->note), 50) ?? '' !!}</td>
                                         <td>
                                             @if($order->is_req_for_rejection == 1)

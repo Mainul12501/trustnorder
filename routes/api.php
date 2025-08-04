@@ -43,6 +43,8 @@ Route::get('/registered-user-order-history', [OrderController::class, 'registere
 Route::get('/req-for-order-rejection/{order}', [OrderController::class, 'reqForOrderRejection']);
 Route::get('/banners', [BannerController::class, 'index']);
 
+Route::post('/change-order-status', [OrderController::class, 'changeOrderStatus']);
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

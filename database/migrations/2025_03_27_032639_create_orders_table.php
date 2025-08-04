@@ -23,7 +23,7 @@ return new class extends Migration
             $table->double('delivery_charge')->default(0)->nullable();
             $table->double('order_total')->default(0)->nullable();
             $table->double('paid_amount')->default(0)->nullable();
-            $table->enum('order_status', ['pending', 'accepted', 'processing', 'on_delivery', 'completed', 'rejected'])->default('pending');
+            $table->enum('order_status', ['pending', 'accepted', 'processing', 'on_delivery', 'completed', 'rejected', 'delivery_complete'])->default('pending');
             $table->tinyInteger('status')->default(0)->nullable();
             $table->tinyInteger('is_viewed')->default(0)->nullable();
             $table->timestamps();
