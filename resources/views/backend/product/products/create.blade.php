@@ -54,7 +54,7 @@
                                 <label for="">Price</label>
                                 <input type="number" name="price" min="0" {{ $isShown ? 'readonly' : '' }}  class="form-control" value="{{ isset($product) ? $product->price : '' }}" />
                             </div>
-                            @if(isset($_GET['type']) && $_GET['type'] == 'discounted')
+                            @if(isset($_GET['type']) && $_GET['type'] == 'discounted' || isset($_GET['type']) && $_GET['type'] == 'regular')
                                 <div class="col-md-4">
                                     <label for="">Discounted Price</label>
                                     <input type="number" name="discounted_price" min="0" {{ $isShown ? 'readonly' : '' }}  class="form-control" value="{{ isset($product) ? $product->discounted_price : '' }}" />

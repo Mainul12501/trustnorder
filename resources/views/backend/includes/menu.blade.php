@@ -58,7 +58,8 @@
                                 <span class="hide-menu position-relative" style="padding-top: 5px; width: 127px;">
                                     New Orders
                                     <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 9px; right: 0px;">
-                                        <span id="totalPendingOrder">{{ \App\Models\Backend\Order\Order::where('order_status', 'pending')->count() ?? 0 }}</span>
+{{--                                        <span id="totalPendingOrder">{{ \App\Models\Backend\Order\Order::where('order_status', 'pending')->count() ?? 0 }}</span>--}}
+                                        <span id="totalPendingOrder">{{ \App\Models\Backend\Order\Order::where('is_viewed', 0)->count() ?? 0 }}</span>
                                         <span class="visually-hidden">Unseen Orders</span>
                                     </span>
                                 </span>

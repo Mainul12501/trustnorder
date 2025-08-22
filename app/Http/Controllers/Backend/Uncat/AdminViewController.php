@@ -304,6 +304,7 @@ class AdminViewController extends Controller
 
     public function getTotalPendingOrders()
     {
-        return response()->json(Order::where('order_status', 'pending')->count() ?? 0);
+//        return response()->json(Order::where('order_status', 'pending')->count() ?? 0);
+        return response()->json(Order::where('is_viewed', 0)->count() ?? 0);
     }
 }

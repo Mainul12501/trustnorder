@@ -27,7 +27,7 @@
                                     @endif
                                     <th>Name</th>
                                     <th>price</th>
-                                    @if(isset($_GET['type']) && $_GET['type'] == 'discounted')
+                                    @if(isset($_GET['type']) && $_GET['type'] == 'discounted' || isset($_GET['type']) && $_GET['type'] == 'regular')
                                         <th>Discounted price</th>
                                     @endif
 {{--                                    <th>Stock</th>--}}
@@ -47,7 +47,7 @@
                                         @endif
                                          <td>{{ $product->product_name ?? '' }}</td>
                                          <td>{{ $product->price ?? 0 }}</td>
-                                        @if(isset($_GET['type']) && $_GET['type'] == 'discounted')
+                                        @if(isset($_GET['type']) && $_GET['type'] == 'discounted' || isset($_GET['type']) && $_GET['type'] == 'regular')
                                            <td>{{ $product->discounted_price ?? 0 }}</td>
                                         @endif
 {{--                                         <td>{{ $product->available_stock ?? 0 }} {{ $product->unit_name ?? '' }}</td>--}}

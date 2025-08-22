@@ -61,6 +61,8 @@ class OrderController extends Controller
                 $order->delivery_charge = $request->delivery_charge;
                 $order->order_status = 'pending';
                 $order->order_payment_status    = $request->order_payment_status;
+                $order->order_payment_type    = $request->order_payment_type;
+                $order->note    = $request->note;
                 $order->status = 1;
                 $order->save();
 //                $order->orderDetails->each->delete();
@@ -69,7 +71,7 @@ class OrderController extends Controller
                     $orderDetails = new OrderDetails();
                     $orderDetails->order_id = $order->id;
 //            $orderDetails->category_id  = $request->;
-                    $orderDetails->product_id   = $request->product_id;
+                    $orderDetails->product_id   = $product['product_id'];
                     $orderDetails->product_name = $product['name'] ?? '';
                     $orderDetails->item_qty = $product['qty'] ?? 0;
                     $orderDetails->unit = $product['unit'] ?? '';
@@ -77,9 +79,9 @@ class OrderController extends Controller
                     $orderDetails->item_total_price = $product['total_price'] ?? 0;
                     $orderDetails->save();
                 }
+                SMS::shoot(ViewHelper::loggedUser()->mobile ?? '0000000000', "Your Order placed successfully. Your order ID #$order->id");
+                SMS::shoot('01820001124' ?? '0000000000', "New Order Placed. Order ID #$order->id");
             });
-            SMS::shoot(ViewHelper::loggedUser()->mobile ?? '0000000000', "Your Order placed successfully. Your order ID #$order->id");
-            SMS::shoot('01820001124' ?? '0000000000', "New Order Placed. Order ID #$order->id");
             return ViewHelper::returnSuccessMessage('Order Placed Successfully.');
         } catch (\Exception $exception)
         {
@@ -132,6 +134,7 @@ class OrderController extends Controller
                 $order->order_status = $request->order_status;
                 $order->category_id    = $request->category_id;
                 $order->order_payment_status    = $request->order_payment_status;
+                $order->note    = $request->note;
                 $order->status = 1;
                 $order->save();
                 $order->orderDetails->each->delete();
@@ -140,7 +143,7 @@ class OrderController extends Controller
                     $orderDetails = new OrderDetails();
                     $orderDetails->order_id = $order->id;
 //            $orderDetails->category_id  = $request->;
-//            $orderDetails->product_id   = $request->;
+                    $orderDetails->product_id   = $product['product_id'];
                     $orderDetails->product_name = $product['name'] ?? '';
                     $orderDetails->item_qty = $product['qty'] ?? 0;
                     $orderDetails->unit = $product['unit'] ?? '';

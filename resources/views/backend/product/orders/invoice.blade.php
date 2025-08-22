@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="col-12 col-sm-6 col-md-8">
+                                    <div class="col-12 col-sm-6 col-md-7">
                                         <h4>Bill To</h4>
                                         <address>
                                             <strong>{{ $order?->user?->name ?? 'Customer Name' }}</strong><br>
@@ -53,11 +53,11 @@
 
                                             </span>
 
-
+                                            <br>
                                             <span>Phone: {{ $order?->user?->mobile ?? '015XXXXXXX' }}</span><br>
                                         </address>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="col-12 col-sm-6 col-md-5">
                                         <h4 class="row">
                                             <span class="col-6">Invoice #</span>
                                             <span class="col-6 text-sm-end">INT-{{ $order->id }}</span>

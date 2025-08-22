@@ -23,7 +23,7 @@
                                 <a href="{{ route('orders.index', ['order_status' => 'accepted']) }}" class="btn btn-primary">Accepted</a>
 {{--                                <a href="{{ route('orders.index', ['order_status' => 'processing']) }}" class="btn btn-primary">Processing</a>--}}
 {{--                                <a href="{{ route('orders.index', ['order_status' => 'on_delivery']) }}" class="btn btn-primary">Our For Delivery</a>--}}
-                                <a href="{{ route('orders.index', ['order_status' => 'completed']) }}" class="btn btn-primary">Completed</a>
+                                <a href="{{ route('orders.index', ['order_status' => 'completed']) }}" class="btn btn-primary">Delivery Sent</a>
                                 <a href="{{ route('orders.index', ['order_status' => 'rejected']) }}" class="btn btn-primary">Rejected</a>
                                 <a href="{{ route('orders.index', ['order_status' => 'delivery_complete']) }}" class="btn btn-primary">Delivery Complete</a>
                             </div>
@@ -35,9 +35,12 @@
                                     <th>#</th>
                                     <th>Order Id</th>
 {{--                                    <th>Method</th>--}}
-                                    <th>Ordered Items</th>
-                                    <th>Note</th>
-                                    <th>Cancel Req Status</th>
+{{--                                    <th>Ordered Items</th>--}}
+{{--                                    <th>Note</th>--}}
+                                    <th>C. Name</th>
+                                    <th>C. Mobile</th>
+{{--                                    <th>Cancel Req Status</th>--}}
+                                    <th>C. Address</th>
                                     <th>Order Status</th>
                                     <th>Payment Status</th>
                                     <th>Change Status</th>
@@ -102,33 +105,45 @@
 {{--                                                 </div>--}}
 {{--                                             @endif--}}
 {{--                                         </td>--}}
-                                        <td>
-                                            <ul class="nav ">
-                                                @if($order->has('orderDetails'))
-                                                    @foreach($order->orderDetails as $orderDetails)
-                                                        <li>{{ $orderDetails?->product_name ?? 'product name' }} (qty: {{ $orderDetails?->item_qty ?? 0 }} - Total: {{ $orderDetails?->item_total_price ?? 0 }} Tk)</li>
-                                                    @endforeach
-                                                @endif
-                                            </ul>
+{{--                                        <td>--}}
+{{--                                            <ul class="nav ">--}}
+{{--                                                @if($order->has('orderDetails'))--}}
+{{--                                                    @foreach($order->orderDetails as $orderDetails)--}}
+{{--                                                        <li>{{ $orderDetails?->product_name ?? 'product name' }} (qty: {{ $orderDetails?->item_qty ?? 0 }} - Total: {{ $orderDetails?->item_total_price ?? 0 }} Tk)</li>--}}
+{{--                                                    @endforeach--}}
+{{--                                                @endif--}}
+{{--                                            </ul>--}}
 
+{{--                                        </td>--}}
+{{--                                        <td>{!! str()->words(strip_tags($order->note), 50) ?? '' !!}</td>--}}
+                                        <td>{{ $order?->user?->name ?? '' }}</td>
+                                        <td>{{ $order?->user?->mobile ?? '' }}</td>
+{{--                                        <td>--}}
+{{--                                            @if($order->is_req_for_rejection == 1)--}}
+{{--                                                <form action="{{ route('change-cancel-req-order-status', $order->id) }}" method="post">--}}
+{{--                                                    @csrf--}}
+{{--                                                    <select name="req_for_rejection_status" id="" class="form-control req_for_rejection_status_form" {{ $order->req_for_rejection_status != 'pending' ? 'disabled' : '' }} >--}}
+{{--                                                        <option value="pending" {{ $order->req_for_rejection_status == 'pending' ? 'selected' : '' }} >Pending</option>--}}
+{{--                                                        <option value="approved" {{ $order->req_for_rejection_status == 'approved' ? 'selected' : '' }} >Approved</option>--}}
+{{--                                                        <option value="canceled" {{ $order->req_for_rejection_status == 'canceled' ? 'selected' : '' }} >Canceled</option>--}}
+{{--                                                    </select>--}}
+{{--                                                </form>--}}
+{{--                                            @endif--}}
+{{--                                        </td>--}}
+                                        <td>
+                                            <span>
+                                                {{ isset($order?->user?->floor) ? $order?->user?->floor.'th floor' : '' }},
+                                                {{ isset($order?->user?->building_address) ? $order?->user?->building_address : '' }} <br>
+                                                {{ isset($order?->user?->road_number) ? 'road '.$order?->user?->road_number : '' }},
+                                                {{ isset($order?->user?->area?->area_name) ? $order?->user?->area?->area_name : '' }} <br>
+                                                {{ isset($order?->user?->area?->district?->district_name) ? $order?->user?->area?->district?->district_name : '' }}
+
+                                            </span>
                                         </td>
-                                        <td>{!! str()->words(strip_tags($order->note), 50) ?? '' !!}</td>
-                                        <td>
-                                            @if($order->is_req_for_rejection == 1)
-                                                <form action="{{ route('change-cancel-req-order-status', $order->id) }}" method="post">
-                                                    @csrf
-                                                    <select name="req_for_rejection_status" id="" class="form-control req_for_rejection_status_form" {{ $order->req_for_rejection_status != 'pending' ? 'disabled' : '' }} >
-                                                        <option value="pending" {{ $order->req_for_rejection_status == 'pending' ? 'selected' : '' }} >Pending</option>
-                                                        <option value="approved" {{ $order->req_for_rejection_status == 'approved' ? 'selected' : '' }} >Approved</option>
-                                                        <option value="canceled" {{ $order->req_for_rejection_status == 'canceled' ? 'selected' : '' }} >Canceled</option>
-                                                    </select>
-                                                </form>
-                                            @endif
-                                        </td>
 
                                         <td>
-
-                                            {{ $order->order_status ?? '' }}
+{{--                                            {{ $order->order_status ?? '' }}--}}
+                                            {{ $order->order_status == 'completed' ? 'Delivery Sent' : ($order->order_status ?? '') }}
                                         </td>
                                         <td>
                                             <p class="mb-0">Type: <span>{{ $order->order_payment_type ?? '' }}</span>
@@ -136,17 +151,18 @@
                                         </td>
 
                                         <td>
-                                            @if($order->order_status == 'accepted')
+{{--                                            @if($order->order_status == 'accepted')--}}
                                                 <select name="order_status" class="form-control change-order-status" data-id="{{ $order->id }}" id="">
                                                     {{--                                                    <option value="pending" {{ $order->order_status == 'pending' ? 'selected' : '' }}>Pending</option>--}}
                                                     {{--                                                    <option value="accepted" {{ $order->order_status == 'accepted' ? 'selected' : '' }}>Accepted</option>--}}
                                                     {{--                                                    <option value="processing" {{ $order->order_status == 'processing' ? 'selected' : '' }}>Processing</option>--}}
                                                     {{--                                                    <option value="on_delivery" {{ $order->order_status == 'on_delivery' ? 'selected' : '' }}>Our For Delivery</option>--}}
                                                     <option disabled selected>Change Status</option>
-                                                    <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                                    <option value="completed" {{ $order->order_status == 'completed' ? 'selected' : '' }}>Delivery Sent</option>
                                                     <option value="rejected" {{ $order->order_status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                                    <option value="delivery_complete" {{ $order->order_status == 'delivery_complete' ? 'selected' : '' }}>Delivery Complete</option>
                                                 </select>
-                                            @endif
+{{--                                            @endif--}}
                                         </td>
                                         <td class="">
                                             @if($order->status == 1 && $order->order_status != 'pending')

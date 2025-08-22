@@ -47,10 +47,12 @@
 
                         <div>
                             <input type="hidden" name="category_id" value="{{ $order->category_id ?? null }}" />
+
                             @if($hasOrderDetails)
                                 @if($order->orderDetails)
                                     @foreach($order->orderDetails as $key => $itemProduct)
                                         <div class="row item-products mt-3 shadow pb-3" data-row="{{$key}}">
+                                            <input type="hidden" name="products[{{$key}}][product_id]" value="{{ $itemProduct->product_id ?? null }}" />
                                             <div class="col-md-4">
                                                 <label for="itemProductName{{$key}}">Product Name</label>
                                                 <input type="text" name="products[{{$key}}][name]" value="{{ isset($itemProduct) ? ($itemProduct->product_name ?? '') : '' }}" {{--id="itemProductName{{$key}}"--}} readonly class="form-control" placeholder="Product Name" />
@@ -71,11 +73,11 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="productName{{$key}}">Product Price</label>
-                                                <input type="number" min="0" name="products[{{$key}}][price]" {{--id="itemProductPrice{{$key}}"--}} readonly value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $itemProduct->item_price : 0 }}" class="form-control product-price" placeholder="Product Price" />
+                                                <input type="number" min="0" name="products[{{$key}}][price]" {{--id="itemProductPrice{{$key}}"--}} readonly value="{{ $hasOrderDetails && isset($itemProduct) ? $itemProduct->item_price : 0 }}" class="form-control product-price" placeholder="Product Price" />
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="productName{{$key}}">Total Price</label>
-                                                <input type="number" min="0" name="products[{{$key}}][total_price]" {{--id="itemProductTotalPrice{{$key}}"--}}  value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $itemProduct->item_price * $itemProduct->item_qty : 0 }}" class="form-control product-total-price" readonly placeholder="Total Price" />
+                                                <input type="number" min="0" name="products[{{$key}}][total_price]" {{--id="itemProductTotalPrice{{$key}}"--}}  value="{{ $hasOrderDetails && isset($itemProduct) ? $itemProduct->item_price * $itemProduct->item_qty : 0 }}" class="form-control product-total-price" readonly placeholder="Total Price" />
                                             </div>
                                         </div>
                                     @endforeach
@@ -87,11 +89,12 @@
                         <div class="row mt-3">
                             <div class="col-md-3">
                                 <label for="">Delivery Charge</label>
-                                <input type="number" min="0" name="delivery_charge" class="form-control"  {{--id="deliveryCharge"--}} value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $order->delivery_charge : 0 }}" placeholder="Delivery Charge" />
+                                <input type="number" min="0" name="delivery_charge" class="form-control"  id="deliveryCharge" value="{{ $hasOrderDetails  ? $order->delivery_charge : 0 }}" placeholder="Delivery Charge" />
                             </div>
                             <div class="col-md-3">
                                 <label for="">Grand Total</label>
-                                <input type="number" name="order_total" class="form-control" id="grandTotal" value="{{ $hasOrderDetails && $order->order_status != 'pending' ? $order->order_total : 0 }}" placeholder="Grand Total" readonly />
+                                <input type="hidden" value="{{ $order->order_total ?? 0 }}" id="previousOrderTotal">
+                                <input type="number" name="order_total" class="form-control" id="grandTotal" value="{{ $hasOrderDetails  ? $order->order_total : 0 }}" placeholder="Grand Total" readonly />
                             </div>
 {{--                            <div class="col-md-3">--}}
 {{--                                <label for="">Order Status</label>--}}
@@ -112,6 +115,14 @@
                                     <option value="PAID" {{ $order->order_payment_status == 'PAID' ? 'selected' : '' }}>PAID</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label for="">Order Note</label>
+                                <textarea name="note" class="form-control" rows="5">{!! $order->note ?? '' !!}</textarea>
+                            </div>
+
                         </div>
 
                         @if(!$isShown)
@@ -213,7 +224,10 @@
                 getSingleProductTotalPrice(rowSerial);
             });
             $(document).on('keyup', '#deliveryCharge', function () {
-                getGrandTotal();
+                // getGrandTotal();
+                var previousDeliveryCharge = $('#previousOrderTotal').val();
+                var deliveryCharge = $(this).val();
+                $('#grandTotal').val(parseInt(previousDeliveryCharge)+parseInt(deliveryCharge));
             });
             $(document).on('change', '.item-unit', function () {
                 var rowSerial = $(this).closest('.row').attr('data-row');
